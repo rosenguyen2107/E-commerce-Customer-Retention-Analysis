@@ -1,6 +1,8 @@
 # E-commerce Customer Retention Analysis
 
-**From behavioural signals to a value-based retention strategy** — an end-to-end analytics
+*From behavioral signals to a value-based retention strategy*. 
+
+This project is an end-to-end analytics
 case study on 232,079 shoppers across five months of the REES46 cosmetics-shop dataset:
 EDA → leakage-free churn model → segmentation → value-based targeting → financial impact →
 A/B validation → implementation roadmap.
