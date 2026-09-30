@@ -96,25 +96,24 @@ October as the feature window and November-December as the label window.
 | Median user | **1 session, 1 active day** - most shoppers form no habit at all |
 | Churn base rate | **77.1%** |
 
-**Cleaning decisions & data-quality notes** — each is a judgement call worth knowing:
+**Cleaning decisions & data-quality notes:**
 
 - **213,811 duplicate events removed** (identical timestamp + user + product + event type).
 - **Non-positive prices dropped** (~0.15% of rows, including some negatives).
-- **Single-event users dropped** — too little behavioural signal to learn from; this is what
+- **Single-event users dropped** - too little behavioural signal to learn from, this is what
   takes the user count from 399,664 to 232,079.
 - **`category_code` is ~98% missing** in this feed, so `category_id` (always present, 490
   distinct values) is used for category breadth instead.
-- **`brand` is ~40% missing.** We back-fill from each product's modal brand — but honestly this
+- **`brand` is ~40% missing.** We back-fill from each product's modal brand, but honestly this
   recovers almost nothing here (127 of ~1.56M missing), because those products have no brand
   recorded anywhere. Kept for correctness, not impact.
 - **The label window overlaps Black Friday.** November GMV spikes, so some "returns" are
-  promo-chasing rather than organic habit — which makes the measured churn rate a **lower
+  promo-chasing rather than organic habit, which makes the measured churn rate a **lower
   bound**. Stated openly rather than buried.
 
 **Why this dataset works for churn:** It spans multiple months with stable `user_id`s, so a
 genuine 60-day non-return outcome can be observed rather than assumed. A single-month dataset
-cannot support a 30-day churn label at all (see leakage, below) — that is precisely the trap this
-project was rebuilt to avoid.
+cannot support a 30-day churn label at all (see leakage, below).
 
 ## Pipeline
 
@@ -147,10 +146,10 @@ while iterating.
 
 ## Limitations
 
-"Churn" = non-return (not subscription cancellation) · no demographics or marketing-channel data,
-so recommendations are product/UX levers only · the Nov-Dec label window overlaps Black Friday,
-so the churn rate is a lower bound · dollar inputs to the targeting rule are illustrative
-assumptions to which the targeted fraction is sensitive.
+- "Churn" = non-return (not subscription cancellation)
+- No demographics or marketing-channel data, so recommendations are product/UX levers only.
+- The Nov-Dec label window overlaps Black Friday, so the churn rate is a lower bound.
+- Dollar inputs to the targeting rule are illustrative assumptions to which the targeted fraction is sensitive.
 
 ---
 *Data: REES46 Marketing Platform · Tooling: Python (pandas, scikit-learn, scipy, seaborn).*
