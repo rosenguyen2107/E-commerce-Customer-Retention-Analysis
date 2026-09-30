@@ -17,12 +17,12 @@ A/B validation → implementation roadmap.
 
 Imagine you run an online cosmetics store. Every day, hundreds of thousands of people drop in to
 browse lipsticks, powders, creams. Your biggest headache isn't "how do we get new people in" -
-it's that **most people visit once and vanish, never to return.** Concretely: out of every 100
-people who visited in October, **77 never came back at all** over the next two months.
+it's that most people visit once and vanish, never to return. Concretely: out of every 100
+people who visited in October, 77 never came back at all over the next two months.
 
 For a store like this, with cheap products and impulse purchases, money doesn't come from one big
-order. It comes from customers coming back and buying again and again. So **keeping customers
-matters more than attracting new ones.**
+order. It comes from customers coming back and buying again and again. So keeping customers
+matters more than attracting new ones.
 
 Which raises the question: *"Can we predict who's about to leave, in time to win them back? And
 who should we spend our retention budget on?"*
@@ -35,23 +35,23 @@ algorithm learns which kinds of people tend to come back and which tend to disap
 this reasonably well.
 
 **2. A counter-intuitive discovery.** The segment that leaves the most (91% never return) is
-actually **barely worth saving**, because they spend almost nothing. Meanwhile, the regulars who
-buy steadily leave less often, but because they spend a lot, **losing them is what actually
-costs money.** Measured in dollars, one single segment accounts for **~$400k of the $572k of
-"revenue at risk"** - more than the other five segments combined.
+actually barely worth saving, because they spend almost nothing. Meanwhile, the regulars who
+buy steadily leave less often, but because they spend a lot, losing them is what actually
+costs money. Measured in dollars, one single segment accounts for ~$400k of the $572k of
+"revenue at risk" - more than the other five segments combined.
 
 **3. Where the retention money should go.** Instead of sending offers to the group that churns
-most (expensive, and it rescues almost no revenue), aim at the group that is **both at risk of
-leaving and spending real money.** Done right, it costs about **5 cents to save $1** of revenue.
-Done wrong, that same $1 costs **$99**.
+most (expensive, and it rescues almost no revenue), aim at the group that is both at risk of
+leaving and spending real money. Done right, it costs about 5 cents to save $1 of revenue.
+Done wrong, that same $1 costs $99.
 
 ## Business question
 
 > **Which users active in October will not return over the next 60 days, and where should
 > limited retention budget be spent?**
 
-On a browse-heavy, low-ticket store, value depends on repeat visits, so **retention, not
-acquisition, is the binding constraint.**
+On a browse-heavy, low-ticket store, value depends on repeat visits, so retention, not
+acquisition, is the binding constraint.
 
 ## Headline results
 
@@ -59,18 +59,18 @@ acquisition, is the binding constraint.**
 |---|---|
 | **Churn base rate** | 77% of October shoppers do not return within 60 days |
 | **Model** | ROC-AUC **0.82** (gradient boosting), beating a recency-only baseline (0.74); stable at ±0.001 across 5-fold CV |
-| **Revenue at risk** | **$572k** over 60 days — **98% concentrated in two of six segments** |
+| **Revenue at risk** | **$572k** over 60 days - **98% concentrated in two of six segments** |
 | **Targeting** | A value-based rule defends **$1 of at-risk revenue for ~$0.05**, vs ~$99 for a naive churn-first campaign |
 
 
 ## Data overview
 
-**Source** — REES46 *eCommerce Events History in a Cosmetics Shop*
+**Source:** REES46 *eCommerce Events History in a Cosmetics Shop*
 ([Kaggle](https://www.kaggle.com/datasets/mkechinov/ecommerce-events-history-in-cosmetics-shop)),
 a real multi-month behavioural log from an online cosmetics retailer.
 
 **Coverage:** October 2019 → February 2020 (5 monthly CSVs, ~20M events). This analysis uses
-October as the feature window and November–December as the label window.
+October as the feature window and November-December as the label window.
 
 **Grain** - one row per user interaction ("event"):
 
@@ -80,7 +80,7 @@ October as the feature window and November–December as the label window.
 | `event_type` | `view` · `cart` · `remove_from_cart` · `purchase` |
 | `product_id`, `category_id`, `category_code`, `brand` | what was interacted with |
 | `price` | item price at the time of the event |
-| `user_id` | the customer — stable across months, which is what makes churn measurable |
+| `user_id` | the customer - stable across months, which is what makes churn measurable |
 | `user_session` | one browsing visit |
 
 **October at a glance (after cleaning)**
@@ -91,9 +91,9 @@ October as the feature window and November–December as the label window.
 | Users | **232,079** (from 399,664 raw, after dropping single-event users) |
 | Event mix | view 1.69M · cart 1.20M · remove-from-cart 0.58M · purchase 0.24M |
 | Buyers | **25,755** (~11% of users) |
-| Median item price | **$4.11** — an impulse-priced category |
+| Median item price | **$4.11** - an impulse-priced category |
 | Median buyer spend | **$32.38** |
-| Median user | **1 session, 1 active day** — most shoppers form no habit at all |
+| Median user | **1 session, 1 active day** - most shoppers form no habit at all |
 | Churn base rate | **77.1%** |
 
 **Cleaning decisions & data-quality notes** — each is a judgement call worth knowing:
